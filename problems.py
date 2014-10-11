@@ -5,18 +5,20 @@ import math, random, sys, time, bisect, string
 class sudoku(Problem):
     def __init__(self, initial, N):
         self.initial = initial
+        print_table(initial)
         self.N = N
     def actions(self, state):
         pos = self.get_empty(state)
         if pos is None:
             return []
         else:
-            return [n for n in range(self.N) if not self.conflicted(state, pos, n)]
+            return [n for n in range(1, self.N + 1) if not self.conflicted(state, pos, n)]
     def result(self, state, n):
         pos = self.get_empty(state)
         new = [row[:] for row in state]
         new[pos[0]][pos[1]] = n
-        "print_table(new)"
+        print_table(state)
+        print_table(new)
         return new
     def conflicted(self, state, pos, n):
         return (self.conflict_box(state, pos, n)
